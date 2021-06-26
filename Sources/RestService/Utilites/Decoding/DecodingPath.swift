@@ -13,8 +13,8 @@ extension CodingUserInfoKey {
 
 extension JSONDecoder {
     
-    public var valueDecodingPath: [DecodingKey]? {
-        get { userInfo[.valueDecodingPath] as? [DecodingKey] }
+    public var valueDecodingPath: [CodingKey]? {
+        get { userInfo[.valueDecodingPath] as? [CodingKey] }
         set { userInfo[.valueDecodingPath] = newValue }
     }
 }

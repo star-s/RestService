@@ -6,13 +6,11 @@
 //
 
 import Foundation
-import Combine
 
-extension URLEncodedFormEncoder: TopLevelEncoder {
-    
+extension URLEncodedFormEncoder: TopLevelEncoderProtocol {
     public typealias Output = String
 
-    public func encode<T>(_ value: T) throws -> String where T : Encodable {
+    public func encode<T: Encodable>(_ value: T) throws -> String {
         try encode(value)
     }
 }
