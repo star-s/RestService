@@ -9,6 +9,8 @@ import Foundation
 
 public protocol PresentationLayer {
     
+    var defaultHeaders: HTTPHeaders { get }
+    
     func prepare<T: Encodable>(post url: URL, parameters: T) throws -> URLRequest
     func prepare<T: Encodable>(get url: URL, parameters: T) throws -> URLRequest
     func prepare<T: Encodable>(put url: URL, parameters: T) throws -> URLRequest

@@ -9,24 +9,26 @@ import Foundation
 
 public extension PresentationLayer {
     
+    var defaultHeaders: HTTPHeaders { .default }
+    
     func prepare<T: Encodable>(post url: URL, parameters: T) throws -> URLRequest {
-        try URLRequest(url: url).settingHeaders().settingMethod(.post).encodingBody(parameters, coder: JSONEncoder(), contentType: "application/json")
+        try URLRequest(url: url).settingHeaders(defaultHeaders).settingMethod(.post).encodingBody(parameters, coder: JSONEncoder(), contentType: "application/json")
     }
     
     func prepare<T: Encodable>(get url: URL, parameters: T) throws -> URLRequest {
-        try URLRequest(url: url).settingHeaders().encodingQuery(parameters, coder: URLEncodedFormEncoder())
+        try URLRequest(url: url).settingHeaders(defaultHeaders).encodingQuery(parameters, coder: URLEncodedFormEncoder())
     }
     
     func prepare<T: Encodable>(put url: URL, parameters: T) throws -> URLRequest {
-        try URLRequest(url: url).settingHeaders().settingMethod(.put).encodingBody(parameters, coder: JSONEncoder(), contentType: "application/json")
+        try URLRequest(url: url).settingHeaders(defaultHeaders).settingMethod(.put).encodingBody(parameters, coder: JSONEncoder(), contentType: "application/json")
     }
     
     func prepare<T: Encodable>(patch url: URL, parameters: T) throws -> URLRequest {
-        try URLRequest(url: url).settingHeaders().settingMethod(.patch).encodingBody(parameters, coder: JSONEncoder(), contentType: "application/json")
+        try URLRequest(url: url).settingHeaders(defaultHeaders).settingMethod(.patch).encodingBody(parameters, coder: JSONEncoder(), contentType: "application/json")
     }
     
     func prepare<T: Encodable>(delete url: URL, parameters: T) throws -> URLRequest {
-        try URLRequest(url: url).settingHeaders().settingMethod(.delete).encodingQuery(parameters, coder: URLEncodedFormEncoder())
+        try URLRequest(url: url).settingHeaders(defaultHeaders).settingMethod(.delete).encodingQuery(parameters, coder: URLEncodedFormEncoder())
     }
     
     func validate(data: Data, response: URLResponse) throws -> Data {
