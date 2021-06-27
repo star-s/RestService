@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension RestService {
+public extension RestService where Presenter.Request == URLRequest, Presenter.Response: URLResponse {
 
     func makeURL(from path: Path) throws -> URL {
         guard let url = URL(string: String(describing: path)) else {

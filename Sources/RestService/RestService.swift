@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol RestService: ApplicationLayer {
+public protocol RestService: ApplicationLayer where Presenter.Request == Transport.Request, Presenter.Response == Transport.Response {
     
     associatedtype Presenter: PresentationLayer
     var presenter: Presenter { get }

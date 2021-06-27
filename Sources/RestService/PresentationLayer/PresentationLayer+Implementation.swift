@@ -11,6 +11,15 @@ public extension PresentationLayer {
     
     var defaultHeaders: HTTPHeaders { .default }
     
+    func decode<T: Decodable>(data: Data, decodingPath: [DecodingKey]?) throws -> T {
+        let coder = JSONDecoder()
+        coder.valueDecodingPath = decodingPath
+        return try coder.decode(DecodingPathAdapter<T>.self, from: data).payload
+    }
+}
+
+extension PresentationLayer where Request == URLRequest, Response: URLResponse {
+    
     func prepare<T: Encodable>(post url: URL, parameters: T) throws -> URLRequest {
         try URLRequest(url: url).settingHeaders(defaultHeaders).settingMethod(.post).encodingBody(parameters, coder: JSONEncoder(), contentType: "application/json")
     }
@@ -38,9 +47,4 @@ public extension PresentationLayer {
         return data
     }
 
-    func decode<T: Decodable>(data: Data, decodingPath: [DecodingKey]?) throws -> T {
-        let coder = JSONDecoder()
-        coder.valueDecodingPath = decodingPath
-        return try coder.decode(DecodingPathAdapter<T>.self, from: data).payload
-    }
 }
