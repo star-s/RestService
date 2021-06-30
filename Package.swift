@@ -30,5 +30,6 @@ let package = Package(
         .testTarget(
             name: "RestServiceTests",
             dependencies: ["RestService"]),
-    ]
+    ],
+    swiftLanguageVersions: [.version("5.5")]
 )

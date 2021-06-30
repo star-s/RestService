@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol TransportLayer {
-    func perform(_ request: URLRequest, completion: @escaping (Result<(data: Data, response: URLResponse), Error>) -> Void)
+    func perform(_ request: URLRequest) async throws -> (data: Data, response: URLResponse)
 }

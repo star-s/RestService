@@ -7,20 +7,10 @@
 
 import Foundation
 
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
 extension URLSession: TransportLayer {
     
-    public func perform(_ request: URLRequest, completion: @escaping (Result<(data: Data, response: URLResponse), Error>) -> Void) {
-        let task = dataTask(with: request) { (data, response, error) in
-            completion(Result {
-                if let error = error {
-                    throw error
-                }
-                guard let response = response else {
-                    throw URLError(.badServerResponse)
-                }
-                return (data ?? Data(), response)
-            })
-        }
-        task.resume()
+    public func perform(_ request: URLRequest) async throws -> (data: Data, response: URLResponse) {
+        try await data(for: request, delegate: nil)
     }
 }
