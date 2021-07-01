@@ -11,6 +11,6 @@ import Foundation
 extension URLSession: TransportLayer {
     
     public func perform(_ request: URLRequest) async throws -> (data: Data, response: URLResponse) {
-        try await data(for: request, delegate: nil)
+        try await data(for: request)
     }
 }
