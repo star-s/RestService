@@ -15,7 +15,7 @@ public protocol TopLevelEncoderProtocol {
     /// Encodes an instance of the indicated type.
     ///
     /// - Parameter value: The instance to encode.
-    func encode<T: Encodable>(_ value: T) throws -> Self.Output
+    func encode<T: Encodable>(_ value: T) throws -> Output
 }
 
 extension JSONEncoder: TopLevelEncoderProtocol {}

@@ -10,7 +10,7 @@ import Foundation
 extension URLSession: TransportLayer {
     
     public func perform(_ request: URLRequest, completion: @escaping (Result<(data: Data, response: URLResponse), Error>) -> Void) {
-        let task = dataTask(with: request) { (data, response, error) in
+        dataTask(with: request) { (data, response, error) in
             completion(Result {
                 if let error = error {
                     throw error
@@ -20,7 +20,6 @@ extension URLSession: TransportLayer {
                 }
                 return (data ?? Data(), response)
             })
-        }
-        task.resume()
+        }.resume()
     }
 }
