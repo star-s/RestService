@@ -20,14 +20,11 @@ public extension RestService {
         do {
             let request = try presenter.prepare(post: makeURL(from: path), parameters: parameters)
             transport.perform(request) { [presenter] (result) in
-                do {
+                completion(Result {
                     let response = try result.get()
                     let data = try presenter.validate(data: response.data, response: response.response)
-                    let value: T = try presenter.decode(data: data, decodingPath: decodingPath)
-                    completion(.success(value))
-                } catch {
-                    completion(.failure(error))
-                }
+                    return try presenter.decode(data: data, decodingPath: decodingPath)
+                })
             }
         } catch {
             completion(.failure(error))
@@ -38,14 +35,11 @@ public extension RestService {
         do {
             let request = try presenter.prepare(get: makeURL(from: path), parameters: parameters)
             transport.perform(request) { [presenter] (result) in
-                do {
+                completion(Result {
                     let response = try result.get()
                     let data = try presenter.validate(data: response.data, response: response.response)
-                    let value: T = try presenter.decode(data: data, decodingPath: decodingPath)
-                    completion(.success(value))
-                } catch {
-                    completion(.failure(error))
-                }
+                    return try presenter.decode(data: data, decodingPath: decodingPath)
+                })
             }
         } catch {
             completion(.failure(error))
@@ -56,14 +50,11 @@ public extension RestService {
         do {
             let request = try presenter.prepare(put: makeURL(from: path), parameters: parameters)
             transport.perform(request) { [presenter] (result) in
-                do {
+                completion(Result {
                     let response = try result.get()
                     let data = try presenter.validate(data: response.data, response: response.response)
-                    let value: T = try presenter.decode(data: data, decodingPath: decodingPath)
-                    completion(.success(value))
-                } catch {
-                    completion(.failure(error))
-                }
+                    return try presenter.decode(data: data, decodingPath: decodingPath)
+                })
             }
         } catch {
             completion(.failure(error))
@@ -74,14 +65,11 @@ public extension RestService {
         do {
             let request = try presenter.prepare(patch: makeURL(from: path), parameters: parameters)
             transport.perform(request) { [presenter] (result) in
-                do {
+                completion(Result {
                     let response = try result.get()
                     let data = try presenter.validate(data: response.data, response: response.response)
-                    let value: T = try presenter.decode(data: data, decodingPath: decodingPath)
-                    completion(.success(value))
-                } catch {
-                    completion(.failure(error))
-                }
+                    return try presenter.decode(data: data, decodingPath: decodingPath)
+                })
             }
         } catch {
             completion(.failure(error))
@@ -92,14 +80,11 @@ public extension RestService {
         do {
             let request = try presenter.prepare(delete: makeURL(from: path), parameters: parameters)
             transport.perform(request) { [presenter] (result) in
-                do {
+                completion(Result {
                     let response = try result.get()
                     let data = try presenter.validate(data: response.data, response: response.response)
-                    let value: T = try presenter.decode(data: data, decodingPath: decodingPath)
-                    completion(.success(value))
-                } catch {
-                    completion(.failure(error))
-                }
+                    return try presenter.decode(data: data, decodingPath: decodingPath)
+                })
             }
         } catch {
             completion(.failure(error))
