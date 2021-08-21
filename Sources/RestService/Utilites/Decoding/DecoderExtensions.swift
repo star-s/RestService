@@ -13,33 +13,20 @@ extension Decoder {
         try keys.reduce(container(keyedBy: K.self)) { try $0.nestedContainer(keyedBy: K.self, forKey: $1) }
     }
 
-    func nestedContainerIfPresent<K: CodingKey>(forDecodingPath keys: [K]) -> KeyedDecodingContainer<K>? {
-        do {
-            return try nestedContainer(forDecodingPath: keys)
-        } catch {
-            return nil
-        }
-    }
-
     public func decode<T: Decodable, K: CodingKey>(_ type: T.Type, byDecodingPath keys: [K]) throws -> T {
-        if keys.isEmpty {
+        var keys = keys
+        guard let valueKey = keys.popLast() else {
             return try T.init(from: self)
         }
-        var path = keys
-        let key = path.removeLast()
-        
         guard let OptionalT = T.self as? _OptionalProtocol.Type else {
-            return try nestedContainer(forDecodingPath: path).decode(T.self, forKey: key)
+            return try nestedContainer(forDecodingPath: keys).decode(T.self, forKey: valueKey)
         }
-        guard let container = nestedContainerIfPresent(forDecodingPath: path) else {
-            return OptionalT.init(nilLiteral: ()) as! T
-        }
-        guard let value = try? container.decode(T.self, forKey: key) else {
+        guard let value = try? nestedContainer(forDecodingPath: keys).decode(T.self, forKey: valueKey) else {
             return OptionalT.init(nilLiteral: ()) as! T
         }
         return value
     }
 }
 
-protocol _OptionalProtocol: ExpressibleByNilLiteral {}
+private protocol _OptionalProtocol: ExpressibleByNilLiteral {}
 extension Optional: _OptionalProtocol {}
