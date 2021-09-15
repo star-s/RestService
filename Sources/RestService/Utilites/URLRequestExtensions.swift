@@ -36,6 +36,15 @@ public extension URLRequest {
         return request
     }
     
+	func encodingBody<P: Encodable, C: TopLevelEncoderProtocol>(_ parameters: P, coder: C, contentType: String? = nil) throws -> URLRequest where C.Output == String {
+		var request = self
+		request.httpBody = try Data(coder.encode(parameters).utf8)
+		if let type = contentType {
+			request.setValue(type, forHTTPHeaderField: "Content-Type")
+		}
+		return request
+	}
+	
     func encodingQuery<P: Encodable, C: TopLevelEncoderProtocol>(_ parameters: P, coder: C) throws -> URLRequest where C.Output == String {
         let query = try coder.encode(parameters)
         if query.isEmpty {
