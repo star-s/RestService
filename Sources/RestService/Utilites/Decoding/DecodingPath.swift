@@ -8,7 +8,7 @@
 import Foundation
 
 extension CodingUserInfoKey {
-    public static let valueDecodingPath = CodingUserInfoKey(rawValue: "valueDecodingPath")!
+	public static let valueDecodingPath: CodingUserInfoKey = "valueDecodingPath"
 }
 
 extension JSONDecoder {

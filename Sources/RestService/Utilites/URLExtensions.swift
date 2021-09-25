@@ -9,8 +9,8 @@ import Foundation
 
 extension URL: ExpressibleByStringLiteral {
     
-    public init(stringLiteral value: String) {
-        guard let url = URL(string: value) else {
+    public init(stringLiteral value: StaticString) {
+		guard let url = URL(string: value.description) else {
             preconditionFailure("Invalid URL string: \(value)")
         }
         self = url
