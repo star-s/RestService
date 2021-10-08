@@ -45,8 +45,8 @@ extension DecodingKey: CodingKey {
 
 extension DecodingKey: ExpressibleByStringLiteral {
 
-    public init(stringLiteral value: String) {
-        self = .key(value)
+    public init(stringLiteral value: StaticString) {
+		self = .key(value.description)
     }
 }
 
