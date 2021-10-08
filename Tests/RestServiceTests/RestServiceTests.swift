@@ -9,7 +9,12 @@ final class RestServiceTests: XCTestCase {
         //XCTAssertEqual(RestService().text, "Hello, World!")
     }
 
+	func testEmptyDataDecodedWithWrapping() {
+		XCTAssertNoThrow(try JSONDecoder().decodeWithWrapping(NullValue.self, from: Data()))
+	}
+	
     static var allTests = [
         ("testExample", testExample),
+		("emptyDataDecodedWithWrapping", testEmptyDataDecodedWithWrapping),
     ]
 }
