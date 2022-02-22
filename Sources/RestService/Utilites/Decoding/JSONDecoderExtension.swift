@@ -12,6 +12,10 @@ extension JSONDecoder {
 	private static let suffix = Data("}".utf8)
 	private static let null = Data("null".utf8)
 
+	private static func wrapped(data: Data) -> Data {
+		prefix + (data.isEmpty ? null : data) + suffix
+	}
+	
 	private struct Box<T: Decodable>: Decodable {
 		let value: T
 	}
@@ -23,6 +27,6 @@ extension JSONDecoder {
 	/// - returns: A value of the requested type.
 	/// - throws: `DecodingError.dataCorrupted` if values requested from the payload are corrupted, or if the given data is not valid JSON.
 	public func decodeWithWrapping<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable {
-		try decode(Box<T>.self, from: Self.prefix + (data.isEmpty ? Self.null : data) + Self.suffix).value
+		try decode(Box<T>.self, from: Self.wrapped(data: data)).value
 	}
 }
