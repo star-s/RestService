@@ -10,16 +10,16 @@ import Foundation
 extension URL: ExpressibleByStringLiteral {
     
     public init(stringLiteral value: StaticString) {
-		guard let url = URL(string: value.description) else {
+		guard let url = URL(string: String(describing: value)) else {
             preconditionFailure("Invalid URL string: \(value)")
         }
         self = url
     }
 }
 
-extension URL {
+public extension URL {
     
-    public func appendingQuery(_ query: String, percentEncoded: Bool = true) -> URL? {
+    func appendingQuery(_ query: String, percentEncoded: Bool = true) -> URL? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
             return nil
         }

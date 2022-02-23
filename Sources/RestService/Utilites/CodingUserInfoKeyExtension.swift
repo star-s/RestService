@@ -9,7 +9,7 @@ import Foundation
 
 extension CodingUserInfoKey: ExpressibleByStringLiteral {
 	public init(stringLiteral value: StaticString) {
-		guard let key = CodingUserInfoKey(rawValue: value.description) else {
+		guard let key = CodingUserInfoKey(rawValue: String(describing: value)) else {
 			preconditionFailure("Invalid key string: \(value)")
 		}
 		self = key
